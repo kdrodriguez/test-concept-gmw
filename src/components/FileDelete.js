@@ -24,7 +24,7 @@ class FileDelete extends Component {
     return (
       <div>
         <form>
-        <div> ¿Desea realmente eliminar el archivo <strong>{file_name}</strong>? </div>
+        <div> ¿Desea realmente eliminar el archivo <strong>{file_name}</strong> ? </div>
         <div className="flex flex-column mt3">
                 
         </div>
