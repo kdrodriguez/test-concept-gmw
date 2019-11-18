@@ -38,7 +38,7 @@ class NavBar extends React.Component {
           <div className="mr-2">
              <i className="fab fa-mendeley fa-2x"></i>
           </div> 
-          <NavbarBrand href="http://localhost:3000" className="text-white"> GRAPHQL - MENDELEY</NavbarBrand>
+          <NavbarBrand href="https://test-concept-gmw.herokuapp.com/" className="text-white"> GRAPHQL - MENDELEY</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
@@ -46,7 +46,7 @@ class NavBar extends React.Component {
                 <NavLink href="https://graphql-mendeley.herokuapp.com/playground" target="blank" className="text-white">GrahpQL-Playground</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="http://localhost:3000" className="text-white">Sync</NavLink>
+                <NavLink href="https://test-concept-gmw.herokuapp.com/" className="text-white">Sync</NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret className="text-white">
@@ -58,7 +58,7 @@ class NavBar extends React.Component {
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>
-                    <i className="fas fa-sign-out-alt"></i> Eliminar token de sesión
+                    <i className="fas fa-sign-out-alt"></i> <a href="https://graphql-mendeley.herokuapp.com/confirmAuth#delete_token=true" target="_blank" rel="noopener noreferrer"> Eliminar token de sesión </a>
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
