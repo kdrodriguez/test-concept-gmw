@@ -1,15 +1,8 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
-//import { Button } from 'reactstrap';
+import { FILE_DELETE } from '../graphql-tags/graphql-tagsMutation';
 
-const FILE_DELETE = gql`
-mutation deleteFile($id: String!){
-  deleteFile(id: $id){
-    statusText
-  }
-}
-`
+
 class FileDelete extends Component {
   constructor(props){
     super(props);
@@ -23,7 +16,6 @@ class FileDelete extends Component {
     const { id, file_name } = this.state
     return (
       <div>
-        <form>
         <div> ¿Desea realmente eliminar el archivo <strong>{file_name}</strong> ? </div>
         <div className="flex flex-column mt3">
                 
@@ -32,7 +24,6 @@ class FileDelete extends Component {
         <Mutation mutation={FILE_DELETE} variables={{ id }}>
           {fileMutation => <button className="btn btn-danger float-right" onClick={fileMutation}><i className="fas fa-times"></i> Eliminar </button>}
         </Mutation>
-        </form>
       </div>
     )
   }

@@ -1,19 +1,8 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
+import { GROUP_UPDATE } from '../graphql-tags/graphql-tagsMutation';
 
-const GROUP_UPDATE = gql`
-mutation updateGroup($id: String!, $name: String!, 
-  									 $access_level: String!, $description: String){
-  updateGroup(id: $id, group:{
-    name:$name
-    access_level:$access_level
-    description: $description
-  }){
-    statusText
-  }
-}
-`
+
 class GroupEdit extends Component {
 
   constructor(props){
@@ -32,7 +21,6 @@ class GroupEdit extends Component {
 
     return (
       <div>
-        <form>
         <div className="flex flex-column mt2">
           <p className="">Grupo de tipo: {access_level}</p>
           <input
@@ -59,7 +47,6 @@ class GroupEdit extends Component {
         <Mutation mutation={GROUP_UPDATE} variables={{ id, name, access_level, description }}>
           {groupMutation => <button className="btn btn-info" onClick={groupMutation} disabled={!name}><i className="fas fa-save"></i> Guardar edición</button>}
         </Mutation>
-        </form>
       </div>
     )
   }

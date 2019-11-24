@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
+import { DOCS_QUERY_ALL } from '../graphql-tags/graphql-tagsQuery';
+import ErrorMsg from './ErrorMsg';
 import { Badge } from 'reactstrap';
 import SpinnerData from './Spinner';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
@@ -10,7 +11,9 @@ import Scroll from 'react-scroll';
 var Element = Scroll.Element;
 
 
-const DOCS_QUERY_ALL = gql`
+
+
+/*const DOCS_QUERY_ALL = gql`
   query getDocs($folder_id: String = "", $group_id: String = "" ){
   documents(limit:"500", view:"bib", folder_id: $folder_id, group_id: $group_id ){
   id
@@ -31,7 +34,7 @@ const DOCS_QUERY_ALL = gql`
   file_attached
   }
   }
-`;
+`;*/
 
 /*var DOCS_QUERY = gql`
   query getDocFolder($folder_id: String!) {
@@ -88,11 +91,17 @@ if(author.hasOwnProperty('first_name')){
 class Documents extends Component {
   constructor(props){
     super(props);
+    this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
     this.state = {
       folder_id: props.match.params.id,
       group_id: props.match.params.idG,
    }
   }
+
+  forceUpdateHandler(){
+    console.log("PASO POR EL FORCE UPDTAE DOCS")
+    this.forceUpdate();
+  };
 
   componentWillReceiveProps(nextProps) {
       this.setState({ folder_id: nextProps.match.params.id, group_id: nextProps.match.params.idG });
@@ -117,11 +126,13 @@ class Documents extends Component {
  
     return (
     <Query query={DOCS_QUERY_ALL} variables={{ folder_id: folder_id, group_id: group_id}}>
-      {({ loading, error, data }) => {
+      {({ loading, error, data, refetch }) => {
         if (loading) return <SpinnerData/>
-        if (error) return `${error}`
+        if (error) return <ErrorMsg errorMsg={`${error}`}/>
 
           var docs = data.documents;
+
+        console.log("FILE ATACHED ",docs.file_attached)
 
         docs.map(document =>{
               if(document.authors === null)
@@ -132,12 +143,19 @@ class Documents extends Component {
 
           <div className="container-fluid">
             <div className="row">
-
             <Router>
               <div className="col-sm-8 p-0 mb-0">
-                <div className="col-sm-12 card border-secondary bg-light text-white mt-0 mb-0">
-                  <ModalResource buttonLabel="Nuevo Documento" modalTitle="Nuevo Documento" iconSource="fas fa-file-alt" typeResource="n-doc"/>
-                </div>
+                <div className="container">
+                 <div className="row">
+                  <div className="col-sm-10 card  bg-light text-white mt-0 mb-0">
+                    <ModalResource buttonLabel="Nuevo Documento" modalTitle="Nuevo Documento" iconSource="fas fa-file-alt" typeResource="n-doc"/>
+                  </div>
+                  <div className="col-sm-2 card bg-light text-white mt-0 mb-0">
+                    <button className="btn btn-outline-light text-muted" onClick={()=> refetch()}> <i class="fas fa-sync-alt"></i></button>
+                  </div>
+                    
+                  </div>
+                  </div>       
                 <Element name="test8" className="element" id="containerElement2" style={{
                   position: 'relative', height: '501px', overflow: 'scroll',
                   marginBottom: '0px', marginLeft: '0px', marginRight: '0px'

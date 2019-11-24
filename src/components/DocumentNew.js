@@ -1,27 +1,11 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
+import { DOC_CREATE } from '../graphql-tags/graphql-tagsMutation';
+//import { DOCS_QUERY_ALL } from '../graphql-tags/graphql-tagsQuery';
+//import Documents from './Documents'
+import SpinnerData from './Spinner';
 
-const DOC_CREATE = gql`
-  mutation createDoc($title: String!, $type: String!, $authors: [PersonInput!],
-  								   $abstract:String, $year: Int, $pages: String
-                     $doi: String, $websites: [String!]){
-  createDocument(document:{
-    title:$title
-    type:$type
-    authors: $authors
-    abstract:$abstract
-    year: $year
-    pages: $pages
-    identifiers:{
-      doi: $doi
-    }
-    websites:$websites
-  }){
-    statusText
-  }
-}
-`
+
 function authorsProcessing(StringTemp){
   var authorsFormated=[];
   var first_name;
@@ -182,8 +166,31 @@ class DocumentNew extends Component {
           
         </div>
         <hr/>
-        <Mutation mutation={DOC_CREATE} variables={{ title, type, authors, abstract, year, pages, doi, websites }}>
-          {docMutation => <button className="btn btn-info float-right" onClick={docMutation} disabled={!title}><i className="fas fa-save"></i> Guardar</button>}
+        <Mutation 
+          mutation={DOC_CREATE} 
+          variables={{ title, type, authors, abstract, year, pages, doi, websites }}
+          //update={(cache, { data: { docMutation } }) => {
+          //  const { documents } = cache.readQuery({ query: DOCS_QUERY_ALL });
+          //  console.log("DOCUMENTOS: ",documents);
+          //  cache.writeQuery({
+          //    query: DOCS_QUERY_ALL,
+          //    data: { documents: documents.concat([docMutation]) },
+          //  });
+          //}}
+        >
+          {(docMutation, {data, error, loading}) => {
+            if(loading) return <SpinnerData/>
+            if (error) return `${error}`
+            console.log(data);
+            return(
+              <div>
+              <button className="btn btn-info float-right" onClick={docMutation} disabled={!title}><i className="fas fa-save"></i> Guardar</button>
+              {data === undefined ? "" :
+                data.statusText
+              }
+              </div>
+            )
+          }}
         </Mutation>
        
       </div>

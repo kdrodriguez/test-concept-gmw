@@ -1,7 +1,6 @@
 import React from 'react'
 import Folders from './Folders'
 import Groups from './Groups'
-import ModalResource from './ModalResource'
 import { Container, Row, Col } from 'reactstrap';
 
 import {
@@ -31,14 +30,9 @@ class Library
               </Row>
             </Container>
           </div>
-          <div className="pane-content">
-            <label>  
-              <ModalResource buttonLabel="Nueva carpeta" modalTitle="Nueva Carpeta" iconSource="fas fa-folder" typeResource="n-fol"/> 
-            </label>  
-            <label> 
-              <Folders/>
-            </label> 
-          </div>
+          
+        <Folders/>
+ 
         </ReflexElement>
 
         <ReflexSplitter/>
@@ -50,14 +44,9 @@ class Library
               </Row>
             </Container>
           </ReflexHandle>
-          <div className="pane-content">
-            <label>
-              <ModalResource buttonLabel="Nuevo grupo " modalTitle="Nuevo Grupo" iconSource="fas fa-users" typeResource="n-gro"/> 
-            </label> 
-            <label>
+
               <Groups/>
-            </label> 
-          </div>
+
         </ReflexElement>
       </ReflexContainer>
     )

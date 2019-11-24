@@ -1,18 +1,8 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
+import { GROUP_CREATE } from '../graphql-tags/graphql-tagsMutation';
 
-const GROUP_CREATE= gql`
-mutation createGroup($name: String!, $access_level: String!, $description: String){
-  createGroup(group:{
-    name:$name
-    access_level:$access_level
-    description: $description
-  }){
-    statusText
-  }
-}
-`
+
 class GroupNew extends Component {
   state = {
      name: '',
@@ -24,7 +14,6 @@ class GroupNew extends Component {
     const { name, access_level, description } = this.state
     return (
       <div>
-        <form>
         <div className="flex flex-column mt3">
           <input
             className="mb2"
@@ -66,7 +55,6 @@ class GroupNew extends Component {
         <Mutation mutation={GROUP_CREATE} variables={{ name, access_level, description }}>
           {groupMutation => <button className="btn btn-info float-right" onClick={groupMutation} disabled={!name}><i className="fas fa-save"></i> Guardar</button>}
         </Mutation>
-        </form>
       </div>
     )
   }

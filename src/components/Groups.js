@@ -1,25 +1,11 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
+import { GROUPS_QUERY } from '../graphql-tags/graphql-tagsQuery';
 import SpinnerData from './Spinner';
 import { Link } from "react-router-dom";
 import ModalResource from './ModalResource'
+import ErrorMsg from './ErrorMsg';
 
-const GROUPS_QUERY = gql`
- {
-  groups{
-    id
-    name
-    access_level
-    description
-    folders{
-      id
-      name
-    }
-    link
-  }
-}
-`;
 
 class Groups extends Component {
   constructor(props) {
@@ -40,11 +26,17 @@ class Groups extends Component {
     // <Query query={DOCS_QUERY} pollInterval={2000}> // la consulta se actualiza cada 2 seg
     return (
       <Query query={GROUPS_QUERY}>
-        {({ loading, error, data }) => {
+        {({ loading, error, data, refetch }) => {
           if (loading) return <SpinnerData />
-          if (error) return `Error! ${error}`
+          if (error) return <ErrorMsg errorMsg={`${error}`}/>
 
           return (
+            <div className="pane-content">
+            <label>  
+              <div className="d-inline-block"><ModalResource  buttonLabel="Nuevo grupo " modalTitle="Nuevo Grupo" iconSource="fas fa-users" typeResource="n-gro"/></div>  
+              <button className="btn btn-outline-light text-muted d-inline-block" onClick={()=> refetch()}> <i className="fas fa-sync-alt"></i></button>
+            </label>
+            <label>  
             <div className="list-group">
               {data.groups.map(group => (
                 <div  key={group.id}>
@@ -78,8 +70,11 @@ class Groups extends Component {
                     </small>
                   </div>
                 </div>
+               
               ))}
 
+            </div>
+            </label> 
             </div>
           );
         }}

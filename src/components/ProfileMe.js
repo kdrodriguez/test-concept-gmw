@@ -1,32 +1,23 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
+import { PROFILE_ME_QUERY } from '../graphql-tags/graphql-tagsQuery';
 import SpinnerData from './Spinner';
+import ErrorMsg from './ErrorMsg';
 
-const PROFILE_ME_QUERY = gql`
-{
-  profileMe{
-    created
-    academic_status
-    email
-    link
-    display_name
-  }
-}
-`;
 
 class ProfileMe extends Component {
-
   render() {
   // <Query query={DOCS_QUERY} pollInterval={2000}> // la consulta se actualiza cada 2 seg
     return (
       <Query query={PROFILE_ME_QUERY}>
         {({ loading, error, data }) => {
           if (loading) return <SpinnerData/>
-          if (error) return `${error}` 
+          if (error) return <ErrorMsg errorMsg={`${error}`}/>
 
            return (
-      <div className="card card-cascade wider">
+      <div>
+      {data.profileMe === undefined ? <ErrorMsg errorMsg={`${error}`}/> :
+      <div className="card card-cascade wider">    
         <div className="view view-cascade overlay mx-auto mt-3">
           <i className="fas fa-user-tie fa-8x"></i>
           <a href="#!">
@@ -45,6 +36,8 @@ class ProfileMe extends Component {
             </span>
           </a>
         </div>
+      </div>
+      }
       </div>
     );
         }}

@@ -1,17 +1,10 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
 import ModalResource from './ModalResource'
-import gql from 'graphql-tag'
+import { DOWNLOAD_FILE } from '../graphql-tags/graphql-tagsQuery';
 import SpinnerData from './Spinner';
+import ErrorMsg from './ErrorMsg';
 
-const DOWNLOAD_FILE = gql`
-query downloadFile($id: String!){
-  file(id:$id){
-    statusText    
-    urlFile
-  }
-}
-`;
 
 var isPDF = file_name => {
   var isPDF = true; 
@@ -45,7 +38,7 @@ componentDidMount() {
       <Query query={DOWNLOAD_FILE} variables={{ id: id }}>
         {({ loading, error, data }) => {
           if (loading) return <SpinnerData/>
-          if (error) return `${error}`
+          if (error) return <ErrorMsg errorMsg={`${error}`}/>
           var isFilePDF = isPDF(this.props.Onefile.file_name); // Comprobar si el file es un PDF
     return (
       <div>

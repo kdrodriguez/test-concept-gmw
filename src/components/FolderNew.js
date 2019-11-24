@@ -1,17 +1,8 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
-//import { Button } from 'reactstrap';
+import { FOLDER_CREATE } from '../graphql-tags/graphql-tagsMutation';
 
-const FOLDER_CREATE = gql`
-mutation createFol($name: String!){
-  createFolder(folder:{
-    name:$name
-  }){
-    statusText
-  }
-}
-`
+
 class FolderNew extends Component {
   state = {
      name: ''
@@ -21,7 +12,6 @@ class FolderNew extends Component {
     const { name } = this.state
     return (
       <div>
-        <form>
         <div className="flex flex-column mt3">
           <input
             className="mb2"
@@ -37,7 +27,6 @@ class FolderNew extends Component {
         <Mutation mutation={FOLDER_CREATE} variables={{ name }}>
           {folMutation => <button className="btn btn-info float-right" onClick={folMutation} disabled={!name}><i className="fas fa-save"></i> Guardar</button>}
         </Mutation>
-        </form>
       </div>
     )
   }

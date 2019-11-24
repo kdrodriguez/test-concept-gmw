@@ -1,53 +1,10 @@
 import React, { Component } from 'react'
-        import { Query } from 'react-apollo'
-        import gql from 'graphql-tag'
-        import FileAttached from './FileAttached'
-        import SpinnerData from './Spinner';
+import { Query } from 'react-apollo'
+import { DOC_DET_QUERY } from '../graphql-tags/graphql-tagsQuery';
+import FileAttached from './FileAttached'
+import SpinnerData from './Spinner';
+import ErrorMsg from './ErrorMsg';
 
-const DOC_DET_QUERY = gql`
-query getDoc($id: String!){
-  document(id:$id, view:"all"){
-  id
-  title
-  type
-  abstract
-  publisher
-  year
-  day
-  month
-  volume
-  pages
-  source
-  institution
-  city
-  created
-  authors{
-    first_name
-    last_name
-  }
-  identifiers{
-    arxiv
-    doi
-    isbn
-    issn
-    pmid
-    scopus
-    pui
-    pii
-    sgr
-  }
-  files{
-    id
-    document_id 
-    file_name
-    size
-  }
-  websites
-  tags
-  keywords
-  }
-}
-`;
 
 var authorsList = author =>{
     var res=' '+author.last_name;
@@ -113,12 +70,9 @@ class DocumentDetails extends Component {
         const {id} = this.state      
         return(
                 <Query query={DOC_DET_QUERY} variables={{id }}>
-                    {({
-                                        loading, error, data }) => {
-                                                if (loading)
-                                            return <SpinnerData/>
-                                        if (error)
-                                            return `${error}`
+                    {({loading, error, data }) => {
+                    if (loading) return <SpinnerData/>
+                    if (error) return <ErrorMsg errorMsg={`${error}`}/>
 
                                         const doc = data.document;
                                        // if (doc.authors === null)

@@ -1,15 +1,8 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
-//import { Button } from 'reactstrap';
+import { GROUP_DELETE } from '../graphql-tags/graphql-tagsMutation';
 
-const GROUP_DELETE = gql`
-mutation deleteGroup($id: String!){
-  deleteGroup(id: $id){
-    statusText
-  }
-}
-`
+
 class GroupDelete extends Component {
   constructor(props){
     super(props);
@@ -23,7 +16,6 @@ class GroupDelete extends Component {
     const { id, name } = this.state
     return (
       <div>
-        <form>
         <div> ¿Desea realmente eliminar el grupo <strong>{name}</strong>? </div>
         <div className="flex flex-column mt3">
                 
@@ -32,7 +24,6 @@ class GroupDelete extends Component {
         <Mutation mutation={GROUP_DELETE} variables={{ id }}>
           {groMutation => <button className="btn btn-danger float-right" onClick={groMutation}><i className="fas fa-times"></i> Eliminar </button>}
         </Mutation>
-        </form>
       </div>
     )
   }

@@ -13,6 +13,8 @@ import Reflex from './Reflex'
 //import { UncontrolledAlert } from 'reactstrap';
 //import { Link } from "react-router-dom";
 //import { Badge } from 'reactstrap';
+import Folders from './test/FoldersReplace'
+//import Library from './Library'
 
 
 class App extends Component {
@@ -21,6 +23,7 @@ class App extends Component {
 
   render() {
     return  <Reflex/>
+    //return  <Folders/>
   }
 }
 

@@ -1,41 +1,35 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
+import { FOLDERS_QUERY } from '../graphql-tags/graphql-tagsQuery';
 import SpinnerData from './Spinner';
 //import Tree from './tree';
 //import CarpetasDemo from './CarpetasDemo'
 //import Widget from './Widget'
 import { Link } from "react-router-dom";
 import ModalResource from './ModalResource'
+import ErrorMsg from './ErrorMsg';
 
-
-const FOLDERS_QUERY = gql`
-  {
-  folders(limit:"500"){
-  id
-  parent_id
-  name
-  documents{
-    title
-  }
-  }
-  }
-`;
 
 class Folders extends Component {
-
   render() {
     return (
       <Query query={FOLDERS_QUERY}>
-        {({ loading, error, data }) => {
+        {({ loading, error, data, refetch }) => {
           if (loading) return <SpinnerData />
-          if (error) return `Error! ${error}`
+          if (error) return <ErrorMsg errorMsg={`${error}`}/>
 
           const folders = data.folders
           var fold = unflatten(folders);
           console.log('Folders', fold)
 
           return (
+            <div className="pane-content">
+            <label> 
+
+              <div className="d-inline-block"><ModalResource buttonLabel="Nueva carpeta" modalTitle="Nueva Carpeta" iconSource="fas fa-folder" typeResource="n-fol"/> </div>
+              <button className="btn btn-outline-light text-muted d-inline-block" onClick={()=> refetch()}> <i className="fas fa-sync-alt"></i></button>
+            </label>
+            <label> 
             <div className="list-group">
               <Link to="/docs/all-docs" key="1" className="list-group-item list-group-item-action">
                 <div className="d-flex w-100 justify-content-between">
@@ -68,6 +62,8 @@ class Folders extends Component {
                   </div>
                 </div>
               ))}
+            </div>
+            </label> 
             </div>
           );
         }}

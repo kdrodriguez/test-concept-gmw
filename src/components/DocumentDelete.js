@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
-//import { Button } from 'reactstrap';
+import { DOCUMENT_DELETE } from '../graphql-tags/graphql-tagsMutation';
+import SpinnerData from './Spinner';
+import Documents from './Documents';
+import ErrorMsg from './ErrorMsg';
 
-const DOCUMENT_DELETE = gql`
-mutation deleteDocument($id: String!){
-  deleteDocument(id: $id){
-    statusText
-  }
-}
-`
 class DocumentDelete extends Component {
   constructor(props){
     super(props);
@@ -21,21 +16,47 @@ class DocumentDelete extends Component {
 
   render() {
     const { id, title } = this.state
-    return (
+     return (
+    <Mutation mutation={DOCUMENT_DELETE} variables={{ id }}>
+      {(docMutation, { data, error, loading }) => {
+         if(loading) return <SpinnerData/>
+         if (error) return <ErrorMsg errorMsg={`${error}`}/>
+          
+        return(
+        <div>
+          <form onSubmit={e => {e.preventDefault(); docMutation();}}>
+            <div> ¿Desea realmente eliminar el documento <strong> {title}</strong>? </div>
+             <div className="flex flex-column mt3">
+                
+             </div>
+             <hr/>
+            <button type="submit" onClick={()=>Documents.forceUpdateHandler} className="btn btn-danger float-right"><i className="fas fa-times"></i> Eliminar </button>
+            {data === undefined ? " " : <p>{data.statusText}</p> }
+          </form>
+        </div>
+      )}}
+    </Mutation>
+    )
+  }
+}
+
+export default DocumentDelete
+
+
+ /*return (
       <div>
-        <form>
         <div> ¿Desea realmente eliminar el documento <strong> {title}</strong>? </div>
         <div className="flex flex-column mt3">
                 
         </div>
         <hr/>
         <Mutation mutation={DOCUMENT_DELETE} variables={{ id }}>
-          {docMutation => <button className="btn btn-danger float-right" onClick={docMutation}><i className="fas fa-times"></i> Eliminar </button>}
+          {(docMutation, {data, error, loading}) => {
+            if(loading) return <SpinnerData/>
+            if (error) return `${error}`
+            return(
+              <button className="btn btn-danger float-right" onClick={docMutation}><i className="fas fa-times"></i> Eliminar </button>
+            )}}
         </Mutation>
-        </form>
       </div>
-    )
-  }
-}
-
-export default DocumentDelete
+    )*/

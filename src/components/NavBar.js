@@ -58,7 +58,7 @@ class NavBar extends React.Component {
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>
-                    <i className="fas fa-sign-out-alt"></i> <a href="https://graphql-mendeley.herokuapp.com/confirmAuth#delete_token=true" target="_blank" rel="noopener noreferrer"> Eliminar token de sesión </a>
+                    <i className="fas fa-sign-out-alt"></i> <a className="text-dark" href="https://graphql-mendeley.herokuapp.com/confirmAuth#delete_token=true" target="_blank" rel="noopener noreferrer"> Eliminar token de sesión </a>
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>

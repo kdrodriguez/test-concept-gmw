@@ -1,27 +1,8 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
+import { DOC_UPDATE } from '../graphql-tags/graphql-tagsMutation';
 
-const DOC_UPDATE = gql`
-    mutation updateDoc($id: String!, $title: String!, $type: String!, 
-    								$authors: [PersonInput!],$abstract:String, $year: Int, 
-    								$pages: String, $doi: String, $websites: [String!]){
-  updateDocument(id: $id, document:{
-    title:$title
-    type:$type
-    authors: $authors
-    abstract:$abstract
-    year: $year
-    pages: $pages
-    identifiers:{
-      doi: $doi
-    }
-    websites:$websites
-  }){
-    statusText
-  }
-}
-`
+
 function websitesProcessingInverse(arrayWebsites){
   var websitesString="";
   for (var i=0; i < arrayWebsites.length; i++) {
