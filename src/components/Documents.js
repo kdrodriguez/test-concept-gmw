@@ -139,6 +139,7 @@ class Documents extends Component {
                 document.authors = [];
               return document;
         })       
+        refetch();
         return (
 
           <div className="container-fluid">

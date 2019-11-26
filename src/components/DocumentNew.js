@@ -1,10 +1,27 @@
 import React, { Component } from 'react'
-import { Mutation } from 'react-apollo'
+import { Mutation, Query } from 'react-apollo'
+import gql from 'graphql-tag';
 import { DOC_CREATE } from '../graphql-tags/graphql-tagsMutation';
 //import { DOCS_QUERY_ALL } from '../graphql-tags/graphql-tagsQuery';
 //import Documents from './Documents'
 import SpinnerData from './Spinner';
+import ErrorMsg from './ErrorMsg';
+import SucessMsg from './SucessMsg';
 
+
+const LAST_DOC = gql` query{
+  documents(limit:"1", order:"desc"){
+    id
+  }
+}`;
+
+const ADD_DOC_TO_FOLDER = gql`
+mutation adddocfol($idF: String!, $idD: String!){
+  addDocToFolder(idF:$idF, idD:$idD){
+    statusText
+  }
+}
+`
 
 function authorsProcessing(StringTemp){
   var authorsFormated=[];
@@ -180,14 +197,11 @@ class DocumentNew extends Component {
         >
           {(docMutation, {data, error, loading}) => {
             if(loading) return <SpinnerData/>
-            if (error) return `${error}`
-            console.log(data);
+            if (error) return <ErrorMsg errorMsg={`${error}`}/>
             return(
               <div>
+              {data === undefined ? "" : <SucessMsg sucessMsg={`${data.createDocument.statusText}`}/>}
               <button className="btn btn-info float-right" onClick={docMutation} disabled={!title}><i className="fas fa-save"></i> Guardar</button>
-              {data === undefined ? "" :
-                data.statusText
-              }
               </div>
             )
           }}
@@ -199,8 +213,67 @@ class DocumentNew extends Component {
 }
 
 export default DocumentNew
-/*
-<Mutation mutation={DOC_MUTATION} variables={{ title, type, authors, abstract, year, pages, doi }}>
-          {docMutation => <Button color="info" onClick={docMutation} disabled={!title}><i className="fas fa-save"></i> Guardar</Button>}
-        </Mutation>
-        */
+
+  
+    /* FORMA PROPUESTA    
+      <Mutation 
+          mutation={DOC_CREATE} 
+          variables={{ title, type, authors, abstract, year, pages, doi, websites }}
+          //update={(cache, { data: { docMutation } }) => {
+          //  const { documents } = cache.readQuery({ query: DOCS_QUERY_ALL });
+          //  console.log("DOCUMENTOS: ",documents);
+          //  cache.writeQuery({
+          //    query: DOCS_QUERY_ALL,
+          //    data: { documents: documents.concat([docMutation]) },
+          //  });
+          //}}
+        >
+          {(docMutation, {data, error, loading}) => {
+            if(loading) return <SpinnerData/>
+            if (error) return `${error}`
+            console.log(data);
+            return(
+              <div>
+              <Query query={LAST_DOC}>
+               {({ loading, error, data, refetch }) => {
+                  var idDocument="";
+                  var idFold="886aed13-3c8e-4cfe-ae55-367f0b2e7c61";
+                  if(data.documents){
+                  var docs = data.documents;
+                  //const doc_id = data.documents[0].id;
+                  console.log("NUEVO DOC: ", data.documents);
+                  idDocument= docs.map((document, index)=>{if(index===0){return document.id}});
+                  console.log("ID NUEVO DOC: ", idDocument[0]);
+                  refetch();
+                  } 
+                  return(
+                    <div>
+                    <Mutation mutation={ADD_DOC_TO_FOLDER} variables={{idFold,idDocument}}>
+                    {({data, error}) =>{
+                      if(error) {console.log("Error add doc: ",`${error}`)} 
+                        if(data){
+                            console.log("ID NUEVO DOC: ", data);
+                          }else{
+                            console.log("NO SE HIZO EL ADD");
+                          }
+
+                        return(
+                          <div></div>
+                          );
+                    }}
+                    </Mutation>
+                    </div>
+                  );
+               }}
+
+              </Query>
+              <div>
+              <button className="btn btn-info float-right" onClick={docMutation} disabled={!title}><i className="fas fa-save"></i> Guardar</button>
+              {data === undefined ? "" :
+                data.statusText
+              }
+              </div>
+              </div>
+            )
+          }}
+        </Mutation>*/

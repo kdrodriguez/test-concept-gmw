@@ -36,9 +36,10 @@ componentDidMount() {
 
     return (
       <Query query={DOWNLOAD_FILE} variables={{ id: id }}>
-        {({ loading, error, data }) => {
+        {({ loading, error, data, refetch }) => {
           if (loading) return <SpinnerData/>
           if (error) return <ErrorMsg errorMsg={`${error}`}/>
+            
           var isFilePDF = isPDF(this.props.Onefile.file_name); // Comprobar si el file es un PDF
     return (
       <div>

@@ -4,6 +4,7 @@ import { DOCUMENT_DELETE } from '../graphql-tags/graphql-tagsMutation';
 import SpinnerData from './Spinner';
 import Documents from './Documents';
 import ErrorMsg from './ErrorMsg';
+import SucessMsg from './SucessMsg';
 
 class DocumentDelete extends Component {
   constructor(props){
@@ -20,8 +21,7 @@ class DocumentDelete extends Component {
     <Mutation mutation={DOCUMENT_DELETE} variables={{ id }}>
       {(docMutation, { data, error, loading }) => {
          if(loading) return <SpinnerData/>
-         if (error) return <ErrorMsg errorMsg={`${error}`}/>
-          
+         if (error) return <ErrorMsg errorMsg={`${error}`}/> 
         return(
         <div>
           <form onSubmit={e => {e.preventDefault(); docMutation();}}>
@@ -30,8 +30,8 @@ class DocumentDelete extends Component {
                 
              </div>
              <hr/>
-            <button type="submit" onClick={()=>Documents.forceUpdateHandler} className="btn btn-danger float-right"><i className="fas fa-times"></i> Eliminar </button>
-            {data === undefined ? " " : <p>{data.statusText}</p> }
+            <button type="submit" onClick={docMutation} className="btn btn-danger float-right"><i className="fas fa-times"></i> Eliminar </button>
+            {data === undefined ? "" : <SucessMsg sucessMsg={`${data.deleteDocument.statusText}`}/>}
           </form>
         </div>
       )}}
@@ -59,4 +59,6 @@ export default DocumentDelete
             )}}
         </Mutation>
       </div>
+
+      onClick={()=>Documents.forceUpdateHandler}
     )*/

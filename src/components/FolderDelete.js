@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
 import { FOLDER_DELETE } from '../graphql-tags/graphql-tagsMutation';
-
+import SpinnerData from './Spinner';
+import ErrorMsg from './ErrorMsg';
+import SucessMsg from './SucessMsg';
 
 class FolderDelete extends Component {
   constructor(props){
@@ -21,7 +23,15 @@ class FolderDelete extends Component {
         </div>
         <hr/>
         <Mutation mutation={FOLDER_DELETE} variables={{ id }}>
-          {folMutation => <button className="btn btn-danger float-right" onClick={folMutation}><i className="fas fa-times"></i> Eliminar </button>}
+          {(folMutation, {error, data, loading}) => {
+            if(loading) return <SpinnerData/>
+            if (error) return <ErrorMsg errorMsg={`${error}`}/>
+            return (
+              <div>
+              <button className="btn btn-danger float-right" onClick={folMutation}><i className="fas fa-times"></i> Eliminar </button>
+              {data === undefined ? "" : <SucessMsg sucessMsg={`${data.deleteFolder.statusText}`}/>}
+              </div>
+         )}}
         </Mutation>
       </div>
     )

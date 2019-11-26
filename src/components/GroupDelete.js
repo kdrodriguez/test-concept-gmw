@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
 import { GROUP_DELETE } from '../graphql-tags/graphql-tagsMutation';
-
+import SpinnerData from './Spinner';
+import ErrorMsg from './ErrorMsg';
+import SucessMsg from './SucessMsg';
 
 class GroupDelete extends Component {
   constructor(props){
@@ -22,7 +24,15 @@ class GroupDelete extends Component {
         </div>
         <hr/>
         <Mutation mutation={GROUP_DELETE} variables={{ id }}>
-          {groMutation => <button className="btn btn-danger float-right" onClick={groMutation}><i className="fas fa-times"></i> Eliminar </button>}
+          {(groMutation, {error, data, loading}) => {
+            if(loading) return <SpinnerData/>
+            if (error) return <ErrorMsg errorMsg={`${error}`}/>
+            return (
+              <div>
+              <button className="btn btn-danger float-right" onClick={groMutation}><i className="fas fa-times"></i> Eliminar </button>
+              {data === undefined ? "" : <SucessMsg sucessMsg={`${data.deleteGroup.statusText}`}/>}
+              </div>
+        )}}
         </Mutation>
       </div>
     )

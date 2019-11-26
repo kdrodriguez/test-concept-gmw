@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
 import { GROUP_CREATE } from '../graphql-tags/graphql-tagsMutation';
+import SpinnerData from './Spinner';
+import ErrorMsg from './ErrorMsg';
+import SucessMsg from './SucessMsg';
 
 
 class GroupNew extends Component {
@@ -53,7 +56,15 @@ class GroupNew extends Component {
         </dl>
         <hr/>
         <Mutation mutation={GROUP_CREATE} variables={{ name, access_level, description }}>
-          {groupMutation => <button className="btn btn-info float-right" onClick={groupMutation} disabled={!name}><i className="fas fa-save"></i> Guardar</button>}
+          {(groupMutation, {error, data, loading}) => {
+              if(loading) return <SpinnerData/>
+              if (error) return <ErrorMsg errorMsg={`${error}`}/>
+              return (
+                <div>
+                {data === undefined ? "" : <SucessMsg sucessMsg={`${data.createGroup.statusText}`}/>}
+                <button className="btn btn-info float-right" onClick={groupMutation} disabled={!name}><i className="fas fa-save"></i> Guardar</button>
+                </div>
+          )}}
         </Mutation>
       </div>
     )

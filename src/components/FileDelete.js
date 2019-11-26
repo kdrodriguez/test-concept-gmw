@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
 import { FILE_DELETE } from '../graphql-tags/graphql-tagsMutation';
+import SpinnerData from './Spinner';
+import ErrorMsg from './ErrorMsg';
+import SucessMsg from './SucessMsg';
 
 
 class FileDelete extends Component {
@@ -22,7 +25,15 @@ class FileDelete extends Component {
         </div>
         <hr/>
         <Mutation mutation={FILE_DELETE} variables={{ id }}>
-          {fileMutation => <button className="btn btn-danger float-right" onClick={fileMutation}><i className="fas fa-times"></i> Eliminar </button>}
+          {(fileMutation, {error, data, loading }) => {
+            if(loading) return <SpinnerData/>
+            if (error) return <ErrorMsg errorMsg={`${error}`}/>
+            return(
+            <div>
+            <button className="btn btn-danger float-right" onClick={fileMutation}><i className="fas fa-times"></i> Eliminar </button>
+            {data === undefined ? "" : <SucessMsg sucessMsg={`${data.deleteFile.statusText}`}/>}
+            </div>
+         )}}
         </Mutation>
       </div>
     )

@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
 import { DOC_UPDATE } from '../graphql-tags/graphql-tagsMutation';
+import SpinnerData from './Spinner';
+import ErrorMsg from './ErrorMsg';
+import SucessMsg from './SucessMsg';
 
 
 function websitesProcessingInverse(arrayWebsites){
@@ -205,13 +208,15 @@ class DocumentEdit extends Component {
         </div>
         <hr/>
         <Mutation mutation={DOC_UPDATE} variables={{ id, title, type, authors, abstract, year, pages, doi, websites }}>
-          {(docMutation, {error, data }) => {
-            console.log('error', error);
-            console.log('data', data);
-          return (<button className="btn btn-info float-right" 
-          onClick={docMutation} 
-          disabled={!title}><i className="fas fa-save"></i> Guardar Edición</button>)
-          }}
+          {(docMutation, {error, data, loading }) => {
+            if(loading) return <SpinnerData/>
+            if (error) return <ErrorMsg errorMsg={`${error}`}/>
+          return (
+            <div>
+            {data === undefined ? "" : <SucessMsg sucessMsg={`${data.updateDocument.statusText}`}/>}
+            <button className="btn btn-info float-right" onClick={docMutation} disabled={!title}><i className="fas fa-save"></i> Guardar Edición</button>
+            </div>
+          )}}
         </Mutation>
       
       </div>

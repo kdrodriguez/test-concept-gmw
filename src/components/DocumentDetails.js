@@ -70,10 +70,10 @@ class DocumentDetails extends Component {
         const {id} = this.state      
         return(
                 <Query query={DOC_DET_QUERY} variables={{id }}>
-                    {({loading, error, data }) => {
+                    {({loading, error, data,refetch }) => {
                     if (loading) return <SpinnerData/>
                     if (error) return <ErrorMsg errorMsg={`${error}`}/>
-
+                    refetch();
                                         const doc = data.document;
                                        // if (doc.authors === null)
                                        //     doc.authors = [];
