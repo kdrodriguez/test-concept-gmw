@@ -1,68 +1,26 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Prueba de concepto del GraphQL Mendeley Wrapper (API)
 
-## Available Scripts
+## Introducción
 
-In the project directory, you can run:
+La prueba de concepto del [Wrapper GraphQL de Mendeley][] (API), es un proyecto académico - investigativo el cual tiene como objetivo comprobar la funcionalidad del wrapper por medio del consumo del mismo. Lea más acerca del [Wrapper GraphQL de Mendeley][] o acceda a su [repositorio GitHub][]
 
-### `npm start`
+## Como usar
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Para usar esta aplicación, debe tener una cuenta Mendeley previamente creada; si no la tiene puede ver las opciones de registro [aquí][]. Si ya tiene una cuenta, siga estos pasos.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- `Empezar` - En la [página de inicio][] del API existen dos maneras de empezar a usar la API; una de estas es **Probar API**, usa esta cuando ya proporciono credenciales de Mendeley, si aun no proporciona sus credenciales, dirijase a **Probar API Credenciales**.
 
-### `npm test`
+- `Proporcionar credenciales` - Si escogio **Probar API Credenciales**, la aplicación le redirigirá a una ventana en donde deberá proporcionar sus credenciales de Mendeley o a su vez confirmar su identidad Mendeley.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- `Proporcionar permisos a la API GraphQL` -  Despúes de proporcionar las credenciales, deberá de dar permisos de uso a la API para poder usar el token generado para poder realizar peticiones (Esto guardará una cookie con el token generado).
+- `Ir a la prueba de concepto` - Después de proporcionar los permiso de uso de token, podrá dirigirse a la prueba de concepto. Nota: Si no dio permisos de uso del token, las peticiones a la API generaran un mensaje informando que el token es inválido.
+- `Uso básico` - La prueba de concepto simula de alguna manera el funcionamiento de la Libreria de Mendeley; esta aplicación le permite ver sus recursos tales como carpetas, grupos, documentos, detalles de documento, archivos y su perfil, además insertar, editar y eliminar recursos.
 
-### `npm run build`
+## Intenta una prueba
+Puedes consumir el API proponiendo tu propia solución. Vamos ¡Intentalo!.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+[prueba de concepto]:https://test-concept-gmw.herokuapp.com/
+[aquí]:https://www.mendeley.com/
+[Wrapper GraphQL de Mendeley]: https://graphql-mendeley.herokuapp.com/
+[repositorio GitHub]: https://github.com/kdrodriguez/graphql-mendeley-wrapper
+[página de inicio]: https://graphql-mendeley.herokuapp.com/
