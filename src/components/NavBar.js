@@ -46,10 +46,10 @@ class NavBar extends React.Component {
                 <NavLink href="https://test-concept-gmw.herokuapp.com/" className="text-white"><i className="fas fa-sync-alt"></i> Sync</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="https://graphql-mendeley.herokuapp.com/playground" target="_blank" className="text-white">GrahpQL-Playground</NavLink>
+                <NavLink href="https://graphql-mendeley.herokuapp.com/playground" target="_blank" className="text-white"><i className="far fa-circle"></i> GrahpQL-Playground</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="https://github.com/kdrodriguez/test-concept-gmw" target="_blank" className="text-white">GitHub Repositorio</NavLink>
+                <NavLink href="https://github.com/kdrodriguez/test-concept-gmw" target="_blank" className="text-white"><i className="fab fa-github"></i> GitHub Repositorio</NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret className="text-white">
