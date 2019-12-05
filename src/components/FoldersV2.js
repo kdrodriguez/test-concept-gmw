@@ -10,7 +10,7 @@ import ModalResource from './ModalResource'
 import ErrorMsg from './ErrorMsg';
 
 
-class Folders extends Component {
+class FoldersV2 extends Component {
   render() {
     return (
       <Query query={FOLDERS_QUERY}>
@@ -23,61 +23,52 @@ class Folders extends Component {
           console.log('Folders', fold)
 
           return (
-            <div className="pane-content">
-              <label>
+         
 
-                <div className="d-inline-block"><ModalResource buttonLabel="Nueva carpeta" modalTitle="Nueva Carpeta" iconSource="fas fa-folder" typeResource="n-fol" /> </div>
-                <button className="btn btn-outline-light text-muted d-inline-block" onClick={() => refetch()}> <i className="fas fa-sync-alt"></i></button>
-              </label>
-              <label>
-                <div className="list-group">
-                  <Link to="/docs/all-docs" key="1" className="list-group-item list-group-item-action">
-                    <div className="d-flex w-100 justify-content-between">
-                      <small className="mt-n2 mb-n2 ml-n3 mr-n3"> <i className="fas fa-circle"></i> Todos los documentos </small>
-                    </div>
-                  </Link>
-                  {data.folders.map(folder => (
-                    <div key={folder.id}>
-                      <div className="d-inline">
-                        <Link to={"/docs/" + folder.id} key={folder.id} className="list-group-item list-group-item-action">
-                          <div className="d-flex w-100 justify-content-between">
-                            <small className="mt-n2 mb-n2 ml-n3 mr-n3"><i className="fas fa-folder"></i> {folder.name}</small>
-                          
-                              <small className="dropdown mr-n3">
-                                <i className="fas fa-chevron-circle-down" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <div className="dropdown-item">
-                                    <ModalResource buttonLabel="Editar carpeta" modalTitle="Editar Carpeta" iconSource="fas fa-folder" typeResource="u-fol" data={folder} />
-                                  </div>
-                                  <div className="dropdown-item">
-                                    <ModalResource buttonLabel="Eliminar carpeta" modalTitle="Eliminar Carpeta" iconSource="fas fa-folder" typeResource="d-fol" data={folder} />
-                                  </div>
-                                  <div className="dropdown-item" href="#">Agregar sub-carpeta</div>
-                                </div>
-                              </small>
-                        
-                          </div>
-                        </Link>
-                      </div>
+
+
+                <div id="jstree" className="ml-n4">
+                  <ul>
+                    <li data-jstree='{ "icon":"fas fa-circle" }'>  <small>Todos los documentos </small>
                       <div className="d-inline">
                         <small className="dropdown mr-n3">
                           <i className="fas fa-chevron-circle-down" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                           <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <div className="dropdown-item">
-                              <ModalResource buttonLabel="Editar carpeta" modalTitle="Editar Carpeta" iconSource="fas fa-folder" typeResource="u-fol" data={folder} />
+                              <ModalResource buttonLabel="Editar carpeta" modalTitle="Editar Carpeta" iconSource="fas fa-folder" typeResource="u-fol" />
                             </div>
                             <div className="dropdown-item">
-                              <ModalResource buttonLabel="Eliminar carpeta" modalTitle="Eliminar Carpeta" iconSource="fas fa-folder" typeResource="d-fol" data={folder} />
+                              <ModalResource buttonLabel="Eliminar carpeta" modalTitle="Eliminar Carpeta" iconSource="fas fa-folder" typeResource="d-fol" />
                             </div>
                             <div className="dropdown-item" href="#">Agregar sub-carpeta</div>
                           </div>
                         </small>
                       </div>
-                    </div>
-                  ))}
+                    </li>
+                    {data.folders.map(folder => (
+                      <li data-jstree='{ "icon":"fas fa-circle" }'> <small>{folder.name} </small>
+                        <div className="d-inline">
+                          <small className="dropdown mr-n3">
+                            <i className="fas fa-chevron-circle-down" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                              <div className="dropdown-item">
+                                <ModalResource buttonLabel="Editar carpeta" modalTitle="Editar Carpeta" iconSource="fas fa-folder" typeResource="u-fol" data={folder}/>
+                              </div>
+                              <div className="dropdown-item">
+                                <ModalResource buttonLabel="Eliminar carpeta" modalTitle="Eliminar Carpeta" iconSource="fas fa-folder" typeResource="d-fol" data={folder}/>
+                              </div>
+                              <div className="dropdown-item" href="#">Agregar sub-carpeta</div>
+                            </div>
+                          </small>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </label>
-            </div>
+
+
+
+        
           );
         }}
       </Query>
@@ -85,7 +76,7 @@ class Folders extends Component {
   }
 }
 
-export default Folders
+export default FoldersV2
 
 // Función para crear álrbol jerárquico de las carpetas
 function unflatten(arr) {

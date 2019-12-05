@@ -1,5 +1,7 @@
 import React from 'react'
 import Folders from './Folders'
+import FoldersV2 from './FoldersV2'
+import FoldersRV2 from './test/FoldersReplaceV2'
 import Groups from './Groups'
 import { Container, Row, Col } from 'reactstrap';
 

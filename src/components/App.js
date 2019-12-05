@@ -14,7 +14,8 @@ import Reflex from './Reflex'
 //import { Link } from "react-router-dom";
 //import { Badge } from 'reactstrap';
 import Folders from './test/FoldersReplace'
-//import Library from './Library'
+import FoldersRV2 from './test/FoldersReplaceV2'
+import CarpetasMaterialUI from './test/CarpetasMaterialUI'
 
 
 class App extends Component {
@@ -23,7 +24,8 @@ class App extends Component {
 
   render() {
     return  <Reflex/>
-    //return  <Folders/>
+  //  return  <CarpetasMaterialUI/>
+    //return  <FoldersRV2/>
   }
 }
 
